@@ -1,33 +1,34 @@
-<% layout('/layouts/boilerplate') %>
 <div id="map" style="height: 400px; width: 100%"></div>
-<h1>All Campgrounds</h1>
+<% title = "Campgrounds" %> <% layout('/layouts/boilerplate') %>
+<section class="container mx-auto">
+  <h1>All Campgrounds</h1>
 
-<a class="btn btn-primary mb-3" href="/campgrounds/new">Add New Campground</a>
-<div class="main">
-  <div class="campground-card">
-    <% campgrounds.forEach(function(campground){ %>
-    <div class="campground">
-      <img
-        src="<%= campground.images[0].url %>"
-        class="card-img-top index-img"
-        alt="..."
-      />
-      <div class="card-body" style="padding: 10px">
-        <h5 class="card-title"><%= campground.title %></h5>
+  <a class="btn btn-primary mb-3" href="/campgrounds/new">Add New Campground</a>
+  <div class="main">
+    <div class="campground-card">
+      <% campgrounds.forEach(function(campground){ %>
+      <div class="campground">
+        <img
+          src="<%= campground.images[0].url %>"
+          class="card-img-top index-img"
+          alt="..."
+        />
+        <div class="card-body" style="padding: 10px">
+          <h5 class="card-title"><%= campground.title %></h5>
 
-        <p class="card-text"><%= campground.description %></p>
-        <p class="card-text">
-          <small class="text-muted"><%= campground.location %></small>
-        </p>
-        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"
-          >View <%= campground.title %></a
-        >
+          <p class="card-text"><%= campground.description %></p>
+          <p class="card-text">
+            <small class="text-muted"><%= campground.location %></small>
+          </p>
+          <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"
+            >View <%= campground.title %></a
+          >
+        </div>
       </div>
+      <% }) %>
     </div>
-    <% }) %>
   </div>
-</div>
-
+</section>
 <script>
   const MapToken = "<%- process.env.MAPBOX_TOKEN %>";
   const campgrounds = {features:<%- JSON.stringify(campgrounds) %>};
