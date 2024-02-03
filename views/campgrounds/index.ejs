@@ -8,11 +8,19 @@
     <div class="campground-card">
       <% campgrounds.forEach(function(campground){ %>
       <div class="campground">
+        <% if(campground.images.length < 1){ %>
+        <img
+          src="/images/campground_(2).jpg"
+          class="card-img-top index-img"
+          alt="..."
+        />
+        <% }else{ %>
         <img
           src="<%= campground.images[0].url %>"
           class="card-img-top index-img"
           alt="..."
         />
+        <% } %>
         <div class="card-body" style="padding: 10px">
           <h5 class="card-title"><%= campground.title %></h5>
 

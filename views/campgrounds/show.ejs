@@ -8,7 +8,13 @@
         data-bs-ride="carousel"
       >
         <div class="carousel-inner">
-          <% campground.images.forEach((img,i) => { %>
+          <% if(campground.images.length < 1){ %>
+          <img
+            src="/images/campground_(2).jpg"
+            class="d-block w-100 show-img"
+            alt="..."
+          />
+          <% } else{%> <% campground.images.forEach((img,i) => { %>
           <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
             <img
               src="<%= img.url %>"
@@ -16,7 +22,7 @@
               alt="..."
             />
           </div>
-          <% }); %>
+          <% }); %> <% } %>
         </div>
         <% if(campground.images.length > 1) { %>
         <button
