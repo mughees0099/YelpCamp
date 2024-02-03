@@ -22,7 +22,7 @@ exports.Create = async (req, res, next) => {
       req.flash("error", "Username is already registered with another account");
     } else if (
       err.message.includes(
-        " duplicate key error collection: yelp-camp.users index: email_1 dup key: { email: "
+        " duplicate key error collection: test.users index: email_1 dup key: { email: "
       )
     ) {
       req.flash("error", "Email is already registered with another account");
