@@ -1,0 +1,167 @@
+<% layout('/layouts/boilerplate') %>
+<div class="show-page mb-3">
+  <div class="rounded">
+    <div class="card">
+      <div
+        id="campgroundCarousel"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <% campground.images.forEach((img,i) => { %>
+          <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+            <img
+              src="<%= img.url %>"
+              class="d-block w-100 show-img"
+              alt="..."
+            />
+          </div>
+          <% }); %>
+        </div>
+        <% if(campground.images.length > 1) { %>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#campgroundCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#campgroundCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <% } %>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title"><%= campground.title %></h5>
+        <p class="card-text"><%= campground.description %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= campground.location %></li>
+        <li class="list-group-item">$<%= campground.price %>/night</li>
+      </ul>
+      <section class="card-body">
+        <div class="mb-3 d-flex justify-content-between">
+          <a href="/campgrounds" class="card-link btn btn-primary">Back</a>
+          <% if (currentUser && campground.owner.equals(currentUser._id)) {%>
+          <div class="d-flex">
+            <a
+              href="/campgrounds/<%= campground._id %>/edit"
+              class="card-link btn btn-warning"
+              >Edit</a
+            >
+
+            <form
+              action="/campgrounds/<%= campground._id %>?_method=DELETE"
+              method="post"
+              class="card-link"
+            >
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+      </section>
+      <div class="d-flex justify-content-between card-footer text-muted">
+        <li class="list-group-item text-muted">
+          Created by: <%= campground.owner.username.charAt(0).toUpperCase()+
+          campground.owner.username.slice(1) %>
+        </li>
+        <div>2 days ago</div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div id="map" class="mapbox"></div>
+    <% if(currentUser){ %>
+    <h1>Leave a Review</h1>
+
+    <form
+      action="/campgrounds/<%= campground._id %>/reviews"
+      method="post"
+      novalidate
+      class="from-validate"
+    >
+      <div class="mb-3">
+        <div class="mb-3">
+          <fieldset class="starability-checkmark">
+            <input
+              type="radio"
+              id="no-rate"
+              class="input-no-rate"
+              name="rating"
+              value="1"
+              checked
+              aria-label="No rating."
+            />
+            <input type="radio" id="first-rate1" name="rating" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="rating" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="rating" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="rating" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="rating" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+        <label class="form-label" for="review">Review</label>
+        <textarea
+          class="form-control"
+          name="review"
+          id="review"
+          cols="10"
+          rows="3"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <button class="btn btn-success">Done</button>
+    </form>
+    <% } %>
+
+    <div class="">
+      <h1 class="mb-3">Reviews</h1>
+      <% if(campground.reviews.length==0) {%>
+      <h4>No reviews yet</h4>
+      <% } %> <% for(let review of campground.reviews){ %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">
+            By: <%= review.owner.username.charAt(0).toUpperCase()+
+            review.owner.username.slice(1) %>
+          </h6>
+          <p class="starability-result" data-rating="<%= review.rating %>">
+            Rated: <%= review.rating %> stars
+          </p>
+          <p class="card-text">Review: <%= review.review %></p>
+
+          <% if (currentUser && review.owner.equals(currentUser._id)) {%>
+          <form
+            action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
+            method="post"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script>
+    const MapToken = "<%- process.env.MAPBOX_TOKEN %>";
+  const campground = <%- JSON.stringify(campground) %>;
+</script>
+<script src="/js/MapBox.js"></script>
