@@ -1,4 +1,4 @@
-YelpCamp
+
 YelpCamp is a web application that allows users to share and discover camping sites. Users can create their own camping sites, view and comment on others' camping sites.
 
 [Live Demo](https://agile-thicket-79535-05a138653f94.herokuapp.com/)
@@ -20,7 +20,7 @@ Flash messages responding to users' interaction with the app
 Responsive web design
 
 Getting Started
-Prerequisites
+Prerequisites:
 You will need to have Node.js and npm installed on your machine. Instructions for installing these can be found on the official Node.js website.
 
 Install
