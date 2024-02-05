@@ -1,6 +1,6 @@
-
+          
 YelpCamp is a web application that allows users to share and discover camping sites. Users can create their own camping sites, view and comment on others' camping sites.
-
+![yelpcamp homepage image](https://res.cloudinary.com/dwn3n5zdb/image/upload/v1707052651/Screenshot_2024-02-04_181649_accrfw.png)
 [Live Demo](https://agile-thicket-79535-05a138653f94.herokuapp.com/)
 
 Features
